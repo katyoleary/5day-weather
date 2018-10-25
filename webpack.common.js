@@ -1,7 +1,6 @@
-'use strict';
-
 require('dotenv').config();
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webpackConfig = module.exports = {};
 
@@ -14,8 +13,8 @@ webpackConfig.output = {
 };
 
 webpackConfig.plugins = [
-  new HTMLWebpackPlugin({
-    title: '5day Weather Forecast',
+  new HtmlWebpackPlugin({
+    title: '',
   }),
 ];
 
@@ -29,11 +28,12 @@ webpackConfig.module.rules = [
   },
   {
     test: /\.js$/,
+    exclude: /node_modules/,
     use: {
       loader: 'babel-loader',
       options: {
-        presets: ['env', 'stage-0', 'react'],
-        plugins: ['transform-react-jsx-source'],
+        presets: ['@babel/preset-env', '@babel/react'],
+        plugins: ['@babel/plugin-proposal-class-properties'],
         cacheDirectory: true,
       },
     },
