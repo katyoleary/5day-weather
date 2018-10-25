@@ -1401,6 +1401,6 @@ const request = `{
     "country": "US",
     "population": 608660
   }
-};`
+}`;
 
 export default request;
