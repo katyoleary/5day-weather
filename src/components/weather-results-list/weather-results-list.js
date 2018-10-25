@@ -9,6 +9,7 @@ class WeatherResultList extends React.Component {
           {results.map((result, index) => {
             return (
               <div key={index}>
+                <h1> { this.state.city } { this.state.zipCode } </h1>
                 <p>Weather: {result.weather_description}, {result.weather_description} </p>
                 <p>temp:</p>
               </div>
