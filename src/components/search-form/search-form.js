@@ -1,45 +1,47 @@
 import React from 'react';
+// import superagent from 'superagent';
+
+import './_search-form.scss';
 
 class SearchForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+
+    const emptyState = {
       city: '',
       zipCode: '',
-    };
+    }
+
+    this.state = emptyState;
   }
 
-  handleCityChange = (e) => {
-    this.setState({ city: e.target.value });
+  handleChange = (e) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
-  handleZipChange = (e) => {
-    this.setState({ zipCode: e.target.value });
-  }
-
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-    // console.log('STATE', this.state);
-    // console.log('PROPS', this.props);
-    this.props.forecastSearch(this.state.city || this.state.zipCode);
+    this.props.forecastSearch(this.state);
     this.setState({ city: '', zipCode: '' });
-  }
+  };
 
   render() {
     return (
       <form onSubmit= {this.handleSubmit} className='form-class'>
         <input 
           type='text'
-          name='citySearch'
+          name='city'
           placeholder='Search by city'
           value={this.state.city}
-          onChange={this.handleCityChange} />
+          onChange={this.handleChange} />
+         or
         <input 
           type='number'
-          name='zipSearch'
+          name='zipCode'
           placeholder='Search by zip'
           value={this.state.zipCode}
-          onChange={this.handleZipChange} />
+          onChange={this.handleChange} />
         <button type='submit'>Search</button>
       </form>
     );
