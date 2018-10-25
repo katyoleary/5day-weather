@@ -4,23 +4,25 @@ class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      citySearch: '',
-      zipSearch: '',
+      city: '',
+      zipCode: '',
     };
   }
 
   handleCityChange = (e) => {
-    this.setState({ citySearch: e.target.value });
+    this.setState({ city: e.target.value });
   }
 
   handleZipChange = (e) => {
-    this.setState({ zipSearch: e.target.value });
+    this.setState({ zipCode: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.searchHandle(this.state.citySearch || this.state.zipSearch);
-    this.setState({ citySearch: '', zipSearch: '' });
+    // console.log('STATE', this.state);
+    // console.log('PROPS', this.props);
+    this.props.forecastSearch(this.state.city || this.state.zipCode);
+    this.setState({ city: '', zipCode: '' });
   }
 
   render() {
@@ -29,13 +31,14 @@ class SearchForm extends React.Component {
         <input 
           type='text'
           name='citySearch'
-          placeholder='Search a city'
-          value={this.state.citySearch}
+          placeholder='Search by city'
+          value={this.state.city}
           onChange={this.handleCityChange} />
         <input 
           type='number'
           name='zipSearch'
-          value={this.state.zipSearch}
+          placeholder='Search by zip'
+          value={this.state.zipCode}
           onChange={this.handleZipChange} />
         <button type='submit'>Search</button>
       </form>

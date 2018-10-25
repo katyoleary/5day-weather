@@ -1,9 +1,9 @@
 import React from 'react';
-import { render as renderDOM } from 'react-dom';
+import { render as renderDOMRender } from 'react-dom';
 
 import App from './components/app/app';
 
 
-const app = document.createElement('div');
-document.body.appendChild(app);
-renderDOM(<App/>, body);
+const body = document.createElement('div');
+document.body.appendChild(body);
+renderDOMRender(<App/>, body);

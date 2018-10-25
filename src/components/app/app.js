@@ -5,6 +5,7 @@ import '../../style/main.scss';
 
 export default class App extends React.Component {
   render() {
+    return (
     <div className='app'>
       <BrowserRouter>
         <div>
@@ -12,5 +13,6 @@ export default class App extends React.Component {
         </div>
       </BrowserRouter>
     </div>
+    );
   }
 }
