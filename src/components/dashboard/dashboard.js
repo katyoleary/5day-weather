@@ -50,8 +50,9 @@ class Dashboard extends React.Component {
             humidity: results.main.humidity,
             weather_main: results.weather[0].main,
             weather_description: results.weather[0].description,
+            date: results.dt_txt,
           };
-        }),
+        }).filter(forecast => forecast.date.includes('12:00:00')),
       };
     });
   };
@@ -61,7 +62,7 @@ class Dashboard extends React.Component {
   //   if (this.state.city) {
   //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&APPID=${process.env.APIKEY}`)
   //       .then((response) => {
-  //         const weatherResults = [];
+  //
   //         console.log(response);
   //         response.body.map((results) => {
   //           return weatherResults.push({
@@ -106,7 +107,9 @@ class Dashboard extends React.Component {
         <p>Enter either the city or zip to see the 5 day forecast</p>
         <SearchForm
           forecastSearch={this.forecastSearch.bind(this)}
-          searchStatus={this.state.successfulSearch} />
+          searchStatus={this.state.successfulSearch}
+          city={this.city}
+        />
         { this.state.forecast.length > 0
           ? <WeatherResultsList forecast={this.state.forecast}/>
           : <div></div>
