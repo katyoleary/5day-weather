@@ -26,20 +26,24 @@ class Dashboard extends React.Component {
     }
   }
 
-  forecastSearch = (city, zip, countryCode) => {
+  forecastSearch = (city, zipCode, countryCode) => {
     if (!countryCode) {
       countryCode = us;
     }
 
     if (city) {
-      return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}`)
+      return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}&APPID=${process.env.APIKEY}`)
         .then((response) => {
           console.log(response.body.data);
           const searchResults = [];
           response.body.data.city.map((results) => {
             return searchResults.push({
-              city: results.city, 
-              weatherList: results.list.main,
+              temp: results.list.main.temp, 
+              temp_min: results.list[0].main.temp_min,
+              temp_max: results.list[0].main.temp_max, 
+              humidity: results.list[0].main.humidity,
+              weather_main: results.list.weather[0].main, 
+              weather_description: results.list.weather[0].description,
             });
           });
           try {
@@ -49,6 +53,23 @@ class Dashboard extends React.Component {
             console.log(err);
             this.setState({ forecast: null, successfulSearch: false });
           }
+        });
+    }
+    if (zipCode) {
+      return superagent.get(`api.openweathermap.org/data/2.5/forecast?zip=${zipCode},${countryCode}&APPID=${process.env.APIKEY}`)
+        .then((response) => {
+          console.log(response.body.data);
+          const searchResults = [];
+          response.body.data.city.map((results) => {
+            return searchResults.push({
+              temp: results.list.main.temp, 
+              temp_min: results.list[0].main.temp_min,
+              temp_max: results.list[0].main.temp_max, 
+              humidity: results.list[0].main.humidity,
+              weather_main: results.list.weather[0].main, 
+              weather_description: results.list.weather[0].description,
+            });
+          });
         });
     }
   }

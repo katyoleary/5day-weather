@@ -1,11 +1,8 @@
 import React from 'react';
 
 class SearchResultList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderSearchResults = (results) => {
+    console.log('RESULTS!', results);
     return (
       <div className='forecast-location'>
         <h1>Forecast for: { results.city }</h1>
@@ -20,11 +17,11 @@ class SearchResultList extends React.Component {
     return (
       <div>
         { 
-          this.props.searchResults ?
-          <div> 
+          this.props.searchResults
+            ? <div> 
             { this.renderSearchResults(this.props.searchResults) }
-          </div> :
-          <div>
+          </div>
+            : <div>
             <h2>No Results</h2>
           </div>
         }
