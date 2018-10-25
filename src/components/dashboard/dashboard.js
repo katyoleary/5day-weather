@@ -73,7 +73,7 @@ class Dashboard extends React.Component {
         <h1>Forecast Search</h1>
         <p>Enter either the city or zip to see 5 day forecast</p>
         <SearchForm
-          forecastSearch={this.forecastSearch}
+          forecastSearch={this.forecastSearch.bind(this)}
           searchStatus={this.state.successfulSearch} />
         <WeatherResultsList weatherResults={this.state.forecast}/>
       </div>
