@@ -21,7 +21,7 @@ class SearchForm extends React.Component {
     e.preventDefault();
     // console.log('STATE', this.state);
     // console.log('PROPS', this.props);
-    this.props.forecastSearch(this.state.city || this.state.zipCode);
+    this.props.forecastSearch(this.state.city, this.state.zipCode);
     this.setState({ city: '', zipCode: '' });
   }
 
@@ -30,13 +30,13 @@ class SearchForm extends React.Component {
       <form onSubmit= {this.handleSubmit} className='form-class'>
         <input 
           type='text'
-          name='citySearch'
+          name='city'
           placeholder='Search by city'
           value={this.state.city}
           onChange={this.handleCityChange} />
         <input 
           type='number'
-          name='zipSearch'
+          name='zipCode'
           placeholder='Search by zip'
           value={this.state.zipCode}
           onChange={this.handleZipChange} />
