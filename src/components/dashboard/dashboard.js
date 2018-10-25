@@ -4,6 +4,8 @@ import superagent from 'superagent';
 import SearchForm from '../search-form/search-form';
 import WeatherResultsList from '../weather-results-list/weather-results-list';
 
+import './_dashboard.scss';
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +77,10 @@ class Dashboard extends React.Component {
         <SearchForm
           forecastSearch={this.forecastSearch.bind(this)}
           searchStatus={this.state.successfulSearch} />
-        <WeatherResultsList weatherResults={this.state.forecast}/>
+        { this.state.forecast > 0
+          ? <WeatherResultsList weatherResults={this.state.forecast}/>
+          : <div></div>
+        }
       </div>
     );
   }

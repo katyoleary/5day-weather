@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './_weather-results-list.scss';
+
 class WeatherResultList extends React.Component {
   renderWeatherResults = (results) => {
     console.log('RESULTS!', results);
