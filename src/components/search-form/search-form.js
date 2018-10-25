@@ -4,9 +4,9 @@ class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      citySearch = '',
-      zipSearch = ''
-    }
+      citySearch: '',
+      zipSearch: '',
+    };
   }
 
   handleCityChange = (e) => {
@@ -20,7 +20,7 @@ class SearchForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.searchHandle(this.state.citySearch || this.state.zipSearch);
-    this.setState({ citySearch: '', zipSearch: ''});
+    this.setState({ citySearch: '', zipSearch: '' });
   }
 
   render() {
@@ -39,7 +39,7 @@ class SearchForm extends React.Component {
           onChange={this.handleZipChange} />
         <button type='submit'>Search</button>
       </form>
-    )
+    );
   }
 }
 

@@ -1,19 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import superagent from 'superagent';
+
 import SearchForm from '../search-form/search-form';
-import SearchResults from '../search-results/search-results';
+import SearchResultsList from '../search-results-list/search-results-list';
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       forecast: [], 
-      successfulSearch: true
+      successfulSearch: true,
     };
   }
 
   componentDidMount = () => {
-    if(localStorage.searchResults) {
+    if (localStorage.searchResults) {
       try {
         const searchResults = JSON.parse(localStorage.searchResults);
         return this.setState({ forecast: searchResults, successfulSearch: true });
@@ -25,30 +26,43 @@ class Dashboard extends React.Component {
     }
   }
 
-  forecastSearch(city, zip, countryCode) {
-    if(!countryCode) {
+  forecastSearch = (city, zip, countryCode) => {
+    if (!countryCode) {
       countryCode = us;
     }
 
-    if(city) {
+    if (city) {
       return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}`)
         .then((response) => {
           console.log(response.body.data);
           const searchResults = [];
-          response.body.data.city.map
-          //PUT MAP DATA HERE ONCE WE KNOW WHAT WE GET FROM API
-
-        })
+          response.body.data.city.map((results) => {
+            return searchResults.push({
+              city: results.city, 
+              weatherList: results.list.main,
+            });
+          });
+          try {
+            localStorage.searchResults = JSON.stringify(searchResults);
+            this.setState({ forecast: searchResults, successfulSearch: true });
+          } catch (err) {
+            console.log(err);
+            this.setState({ forecast: null, successfulSearch: false });
+          }
+        });
     }
   }
 
   render() {
-    return(
+    return (
       <div>
         <h1>Forecast Search</h1>
         <p>Enter either the city or zip that you wish to recieve 5 day weather data for</p>
-        //INSERT SEARCHFORM AND SEARCH RESULTS INFORMATION HERE
+        <SearchForm searchHandle={this.forecastSearch} searchStatus={this.state.successfulSearch} />
+        <SearchResultsList searchResults={this.state.forecast}/>
       </div>
-    )
+    );
   }
 }
+
+export default Dashboard;
