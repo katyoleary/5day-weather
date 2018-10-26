@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
 
   forecastSearch = () => {
     if (this.state.city) {
-      return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&APPID=${process.env.APIKEY}`)
+      return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${this.state.city},us&units=imperial&APPID=${process.env.APIKEY}`)
         .then((response) => {
           console.log(response);
           this.setState(() => {
@@ -86,7 +86,7 @@ class Dashboard extends React.Component {
         });
     }
     if (this.state.zipCode) {
-      return superagent.get(`api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&units=imperial&APPID=${process.env.APIKEY}`)
+      return superagent.get(`api.openweathermap.org/data/2.5/forecast?zip=${this.state.zipCode},us&units=imperial&APPID=${process.env.APIKEY}`)
         .then((response) => {
           console.log(response);
           this.setState(() => {
