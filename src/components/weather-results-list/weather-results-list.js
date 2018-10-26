@@ -6,13 +6,17 @@ import './_weather-results-list.scss';
 class WeatherResultList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      city: this.props.city ? this.props.city : '',
+      zipCode: this.props.zipCode ? this.props.zipCode : '',
+    };
   }
 
   renderWeatherResults = () => {
     return (
 
       <div className='forecast-location'>
-        <h1>Showing the 5 day weather forecast for {this.props.city} </h1>
+        <h1>Showing the 5 day weather forecast: {this.state.city} </h1>
           {this.props.forecast.map((result, index) => {
             return (
               <div className='forecast-result' key={index}>

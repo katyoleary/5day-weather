@@ -1,7 +1,16 @@
+@import "../../style/vars";
+
 .forecast-result {
+  font-family: $pFont;
   border: black solid;
-  border-radius: 15%;
-  padding: 1em;
+  border-radius: 7%;
+  padding: .5em;
   display: inline-block;
   margin: .5em;
 }
+
+h1 {
+  font: $headerFont;
+  color: darkblue;
+}
+
