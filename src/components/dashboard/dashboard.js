@@ -1,12 +1,12 @@
+import './_dashboard.scss';
+
 import React from 'react';
-// import superagent from 'superagent';
+import superagent from 'superagent';
 
 import SearchForm from '../search-form/search-form';
 import WeatherResultsList from '../weather-results-list/weather-results-list';
 
 import request from '../../../request';
-
-import './_dashboard.scss';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -20,10 +20,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount = () => {
-    if (localStorage.weatherResults) {
+    if (localStorage.forecast) {
       try {
-        const weatherResults = JSON.parse(localStorage.weatherResults);
-        return this.setState({ forecast: weatherResults, successfulSearch: true });
+        return JSON.parse(localStorage.forecast);
       } catch (err) {
         return console.error(err);
       }
@@ -50,8 +49,9 @@ class Dashboard extends React.Component {
             humidity: results.main.humidity,
             weather_main: results.weather[0].main,
             weather_description: results.weather[0].description,
+            date: results.dt_txt,
           };
-        }),
+        }).filter(forecast => forecast.date.includes('12:00:00')),
       };
     });
   };
@@ -59,42 +59,53 @@ class Dashboard extends React.Component {
 
   // forecastSearch = () => {
   //   if (this.state.city) {
-  //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&APPID=${process.env.APIKEY}`)
+  //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${this.state.city},us&units=imperial&APPID=${process.env.APIKEY}`)
   //       .then((response) => {
-  //         const weatherResults = [];
   //         console.log(response);
-  //         response.body.map((results) => {
-  //           return weatherResults.push({
-  //             temp: results.list[0].main.temp,
-  //             temp_min: results.list[0].main.temp_min,
-  //             temp_max: results.list[0].main.temp_max,
-  //             humidity: results.list[0].main.humidity,
-  //             weather_main: results.list.weather[0].main,
-  //             weather_description: results.list.weather[0].description,
-  //           });
-  //         });
+  //         this.setState(() => {
+  //           return {
+  //             forecast: response.list.map((results) => {
+  //               return {
+  //                 temp: results.main.temp,
+  //                 temp_min: results.main.temp_min,
+  //                 temp_max: results.main.temp_max,
+  //                 humidity: results.main.humidity,
+  //                 weather_main: results.weather[0].main,
+  //                 weather_description: results.weather[0].description,
+  //               };
+  //             }),
+  //           };
+  //         })
   //         try {
-  //           localStorage.weatherResults = JSON.stringify(weatherResults);
-  //           this.setState({ forecast: weatherResults, successfulSearch: true });
+  //           localStorage.forecast = JSON.stringify(this.state.forecast);
   //         } catch (err) {
   //           this.setState({ forecast: null, successfulSearch: false });
   //         }
   //       });
   //   }
   //   if (this.state.zipCode) {
-  //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&units=imperial&APPID=${process.env.APIKEY}`)
+  //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?zip=${this.state.zipCode},us&units=imperial&APPID=${process.env.APIKEY}`)
   //       .then((response) => {
-  //         const weatherResults = [];
-  //         response.body.data.city.map((results) => {
-  //           return weatherResults.push({
-  //             temp: results.list.main.temp,
-  //             temp_min: results.list[0].main.temp_min,
-  //             temp_max: results.list[0].main.temp_max,
-  //             humidity: results.list[0].main.humidity,
-  //             weather_main: results.list.weather[0].main,
-  //             weather_description: results.list.weather[0].description,
-  //           });
-  //         });
+  //         console.log(response);
+  //         this.setState(() => {
+  //           return {
+  //             forecast: response.list.map((results) => {
+  //               return {
+  //                 temp: results.main.temp,
+  //                 temp_min: results.main.temp_min,
+  //                 temp_max: results.main.temp_max,
+  //                 humidity: results.main.humidity,
+  //                 weather_main: results.weather[0].main,
+  //                 weather_description: results.weather[0].description,
+  //               };
+  //             }).filter(forecast => forecast.date.includes('12:00:00')),
+  //           };
+  //         })
+  //         try {
+  //           localStorage.forecast = JSON.stringify(this.state.forecast);
+  //         } catch (err) {
+  //           this.setState({ forecast: null, successfulSearch: false });
+  //         }
   //       });
   //   }
   // }
@@ -102,13 +113,18 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <h1>Forecast Search</h1>
+        <h1>Weather App ☼</h1>
         <p>Enter either the city or zip to see the 5 day forecast</p>
         <SearchForm
           forecastSearch={this.forecastSearch.bind(this)}
-          searchStatus={this.state.successfulSearch} />
+          searchStatus={this.state.successfulSearch}
+          city={this.city}
+        />
         { this.state.forecast.length > 0
-          ? <WeatherResultsList forecast={this.state.forecast}/>
+          ? <WeatherResultsList
+            forecast={this.state.forecast}
+            city={this.state.city}
+            />
           : <div></div>
         }
       </div>
