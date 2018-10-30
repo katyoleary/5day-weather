@@ -11,6 +11,8 @@ To use this application:
   -add APIKEY='your api key goes here' to .env file
 5. In your terminal, run ```npm run watch```
 6. Search for your forecast 
+<br> 
+*please note, this API only allows 10 requests per hour*
 
 ### Built using:
 React, SCSS, ES6, Superagent, Babel, Webpack
