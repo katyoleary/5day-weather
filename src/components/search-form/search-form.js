@@ -22,26 +22,26 @@ class SearchForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.forecastSearch(this.state);
+    this.props.forecastSearch(this.state.city, this.state.zipCode);
     this.setState({ city: '', zipCode: '' });
   };
 
   render() {
     return (
-      <form onSubmit= {this.handleSubmit} className='form-class'>
+      <form onSubmit= { this.handleSubmit } className='form-class'>
         <input 
           type='text'
           name='city'
           placeholder='Search by city'
-          value={this.state.city}
-          onChange={this.handleChange} />
+          value={ this.state.city }
+          onChange={ this.handleChange } />
          or
         <input 
           type='number'
           name='zipCode'
           placeholder='Search by zip'
-          value={this.state.zipCode}
-          onChange={this.handleChange} />
+          value={ this.state.zipCode }
+          onChange={ this.handleChange } />
         <button type='submit'>Search</button>
       </form>
     );

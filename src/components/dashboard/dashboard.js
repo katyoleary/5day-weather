@@ -14,8 +14,6 @@ class Dashboard extends React.Component {
     this.state = {
       forecast: [], 
       successfulSearch: true,
-      city: '',
-      zipCode: '',
     };
   }
 
@@ -57,14 +55,14 @@ class Dashboard extends React.Component {
   };
 
 
-  // forecastSearch = () => {
-  //   if (this.state.city) {
-  //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?q=${this.state.city},us&units=imperial&APPID=${process.env.APIKEY}`)
+  // forecastSearch = (city, zipCode) => {
+  //   if (city) {
+  //     return superagent.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&APPID=${APIKEY}`)
   //       .then((response) => {
   //         console.log(response);
   //         this.setState(() => {
   //           return {
-  //             forecast: response.list.map((results) => {
+  //             forecast: response.body.list.map((results) => {
   //               return {
   //                 temp: results.main.temp,
   //                 temp_min: results.main.temp_min,
@@ -72,24 +70,27 @@ class Dashboard extends React.Component {
   //                 humidity: results.main.humidity,
   //                 weather_main: results.weather[0].main,
   //                 weather_description: results.weather[0].description,
+  //                 date: results.dt_txt,
   //               };
-  //             }),
+  //             }).filter(forecast => forecast.date.includes('12:00:00')),
+  //             city: response.body.city.name,
   //           };
   //         })
   //         try {
   //           localStorage.forecast = JSON.stringify(this.state.forecast);
   //         } catch (err) {
+  //           console.log(err);
   //           this.setState({ forecast: null, successfulSearch: false });
   //         }
   //       });
   //   }
-  //   if (this.state.zipCode) {
-  //     return superagent.get(`api.openweathermap.org/data/2.5/forecast?zip=${this.state.zipCode},us&units=imperial&APPID=${process.env.APIKEY}`)
+  //   else if (zipCode) {
+  //     return superagent.get(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&units=imperial&APPID=${APIKEY}`)
   //       .then((response) => {
   //         console.log(response);
   //         this.setState(() => {
   //           return {
-  //             forecast: response.list.map((results) => {
+  //             forecast: response.body.list.map((results) => {
   //               return {
   //                 temp: results.main.temp,
   //                 temp_min: results.main.temp_min,
@@ -97,8 +98,10 @@ class Dashboard extends React.Component {
   //                 humidity: results.main.humidity,
   //                 weather_main: results.weather[0].main,
   //                 weather_description: results.weather[0].description,
+  //                 date: results.dt_txt,
   //               };
   //             }).filter(forecast => forecast.date.includes('12:00:00')),
+  //             city: response.body.city.name,
   //           };
   //         })
   //         try {
@@ -113,17 +116,17 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <h1>Weather App ☼</h1>
-        <p>Enter either the city or zip to see the 5 day forecast</p>
+        <h1 className='weather-header'>Weather App ☼</h1>
+        <p className='weather-p'>Enter either a city or zip to see the 5 day forecast</p>
         <SearchForm
-          forecastSearch={this.forecastSearch.bind(this)}
-          searchStatus={this.state.successfulSearch}
-          city={this.city}
+          forecastSearch={ this.forecastSearch.bind(this) }
+          searchStatus={ this.state.successfulSearch }
+          city={ this.state.city }
         />
         { this.state.forecast.length > 0
           ? <WeatherResultsList
-            forecast={this.state.forecast}
-            city={this.state.city}
+            forecast={ this.state.forecast }
+            city={ this.state.city }
             />
           : <div></div>
         }

@@ -1,7 +1,18 @@
+@import '../../style/vars';
+
 form input {
+  font-family: $headerFont;
   border-radius: 10%;
+  padding:.5em;
+  margin: .4em;
+}
+
+form {
+  font-family: $headerFont;
 }
 
 button {
   border-radius: 10%;
+  padding: .5em;
+  font-family: $headerFont;
 }

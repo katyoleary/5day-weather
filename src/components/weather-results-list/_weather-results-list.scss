@@ -2,15 +2,19 @@
 
 .forecast-result {
   font-family: $pFont;
-  border: black solid;
+  border: black solid 1px;
   border-radius: 7%;
-  padding: .5em;
+  padding: .7em;
   display: inline-block;
   margin: .5em;
 }
 
-h1 {
-  font: $headerFont;
+.forecast-h1 {
+  font-family: $headerFont;
+  font-weight: normal;
+  font-size: 1.5em;
   color: darkblue;
+  padding: 1em;
+  padding-left: .5em;
 }
 
