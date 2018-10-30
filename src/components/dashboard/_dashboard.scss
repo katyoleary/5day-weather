@@ -1,19 +1,21 @@
 @import '../../style/_vars.scss';
 
 
-h1 {
+.weather-header {
   font-family: $headerFont;
-  font-size: 7em;
+  font-size: 1.5em;
   font-weight: bold;
-  padding: 5em;
-  margin: 20px;
-  border: black solid;
+  color: darkblue;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: .4em;
 }
 
-p {
+.weather-p {
   font-family: Courier;
   font-size: $pFontSize;
-  padding: 50px;
+  padding: .5em;
+  padding-bottom: 1em;
 }
 
 

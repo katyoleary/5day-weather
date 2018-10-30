@@ -22,7 +22,7 @@ class SearchForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.forecastSearch(this.state);
+    this.props.forecastSearch(this.state.city, this.state.zipCode);
     this.setState({ city: '', zipCode: '' });
   };
 
